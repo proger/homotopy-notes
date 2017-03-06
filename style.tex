@@ -1,0 +1,89 @@
+\usepackage[a4paper, margin=1in, top=0.7in, columnsep=2cm]{geometry}
+\usepackage[yyyymmdd,hhmmss]{datetime}
+\usepackage{hyperref}
+\usepackage{cool}
+\usepackage{fancyhdr}
+\usepackage{amsthm}
+
+\usepackage[makeroom]{cancel}
+
+\usepackage{titling}
+\setlength{\droptitle}{-3em}   % This is your set screw
+
+\hypersetup{
+    colorlinks,
+    linkcolor={red!30!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+
+\newtheoremstyle{defstyle}% <name>
+{6pt}% <Space above>
+{6pt}% <Space below>
+{}% <Body font>
+{}% <Indent amount>
+{}% <Theorem head font>
+{:}% <Punctuation after theorem head>
+{.5em}% <Space after theorem headi>
+{\thmname{\textbf{#1}}\thmnumber{ #2}\thmnote{ (\textsc{#3})}}
+
+
+\theoremstyle{defstyle}
+\newcounter{axiom} \numberwithin{axiom}{section}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{elemma}[theorem]{Lemma}%[section]
+\newtheorem{eclaim}[theorem]{Claim}
+\newtheorem{eaxiom}[axiom]{Axiom}
+\newtheorem{definition}[theorem]{Definition}
+
+\newcommand\claim[1]{
+  \begin{eclaim}
+    #1
+  \end{eclaim}
+  \bigskip
+}
+
+\newcommand\nclaim[2]{
+  \begin{eclaim}[#1]
+    #2
+  \end{eclaim}
+  \bigskip
+}
+
+\newcommand\defn[2]{
+  \begin{definition}[#1]
+    #2
+  \end{definition}
+  \medskip
+}
+
+\newcommand\axiom[2]{
+  \begin{eaxiom}[#1]
+    #2
+  \end{eaxiom}
+  \medskip
+}
+
+\newcommand\lemma[3]{
+  \begin{elemma}[#1]
+    #2
+  \end{elemma}
+  \begin{proof}
+    #3
+  \end{proof}
+  \medskip
+}
+
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\rhead{}
+\lfoot{\footnotesize {\yyyymmdddate\today} at \currenttime}
+\cfoot{}
+\rfoot{\thepage}
+\renewcommand{\headrulewidth}{0.0pt}
+\renewcommand{\footrulewidth}{0.0pt}
+
+\usepackage{graphicx}
+\usepackage{float} % use [H] for placing
+\graphicspath{ {figures/} }
