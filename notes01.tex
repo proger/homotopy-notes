@@ -3,7 +3,7 @@
 \input{macros}
 
 \title{Introduction to Homotopy Theory \\
-  \large (notes based on lectures by Sergiy Maksymenko)
+  \large (Notes based on lectures by Sergiy Maksymenko)
 }
 \author{}
 \date{}
@@ -14,13 +14,49 @@
 \maketitle
 \thispagestyle{fancy}
 
-
 \begin{abstract}
+  Homotopy theory studies spaces up to a homotopy, which a continuous deformation of one
+  continuous function to another. This documents is a work in progress done during a course audit.
+  These notes are taken purposefully in English to strenghten intuition
+  and simplify lookup of concepts in related literature.
 \end{abstract}
 
 \tableofcontents
 
-\section{Notes on Topology}
+\section{Notes on Point-set Topology}
+
+\defn{Topological space}{
+  A topological space is a pair $\langle X, \tau \rangle$, where $X$ is a set
+  and $\tau$, a topology on X, is a collection of subsets ($\tau \subseteq \mathcal{P}(X)$)
+  called open sets, such that:
+
+  \begin{itemize}
+  \item $\emptyset \in \tau$.
+  \item $X \in \tau$.
+  \item $\tau$ is closed under arbitrary finite intersections.
+  \item $\tau$ is closed under abbitrary unions. \todo{Maybe find some cute notation for this.}
+  \end{itemize}
+}
+
+\defn{Trivial Topology}{
+  A topological space is called trivial, when the topology on $X$
+  consists only of $\emptyset$ and $X$.
+}
+
+\defn{Discrete Topology}{
+  A topological space is called discrete, when $\tau = \mathcal{P}(X)$.
+}
+
+\defn{Continuous map}{
+  Let $\langle X, \tau \rangle$ and $\langle Y, \sigma \rangle$ be topological spaces.
+  A map $f: X \to Y$ is \textbf{continuous} if $\forall s \in \sigma, \inv{f}(s) \in \tau$.
+  In plain English, a map is continuous when a preimage of an open set in $Y$ is an open set in $X$.
+}
+
+\todo{Base of topology and methods of inducing topologies on sets were discussed during Lecture 2.}
+
+\todo{Bonus. Compare topology to a field of sets to a $\sigma$-algebra to a Borel $\sigma$-algebra. Discussed during Lecture 5.}
+
 
 \section{Homotopy}
 
@@ -43,6 +79,34 @@
 \begin{proof}
   \ldots
 \end{proof}
+
+\subsection{Contractible Spaces}
+
+\subsubsection{Convex Sets}
+
+\subsubsection{Star-convex Sets}
+
+\subsubsection{Trees}
+
+\section{Quotient Spaces and Maps}
+
+\todo{See lectures 2 and 3.}
+
+\todo{Brouwer's Fixed Point Theorem was mentioned around here. Bring up the context?}.
+
+
+\subsection{Quotients and Groups}
+
+\subsection{Cones of Topological Spaces}
+
+\section{Retractions and Deformation Retractions}
+
+\section{Classes of Homotopy Maps}
+
+\todo{See lectures 4 and 5}.
+
+\subsection{Mappings of $\mathbb{S}^1$ to Itself}
+
 
 \section{Resources}
 
