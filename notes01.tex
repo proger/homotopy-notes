@@ -23,7 +23,7 @@
 
 \tableofcontents
 
-\section{Notes on Point-set Topology}
+\section{Point-set Topology}
 
 \defn{Topological space}{
   A topological space is a pair $\langle X, \tau \rangle$, where $X$ is a set
@@ -51,6 +51,8 @@
   Let $\langle X, \tau \rangle$ and $\langle Y, \sigma \rangle$ be topological spaces.
   A map $f: X \to Y$ is \textbf{continuous} if $\forall s \in \sigma, \inv{f}(s) \in \tau$.
   In plain English, a map is continuous when a preimage of an open set in $Y$ is an open set in $X$.
+
+  $C(X,Y)$ denotes a set of all continuous maps between $X$ and $Y$.
 }
 
 \todo{Base of topology and methods of inducing topologies on sets were discussed during Lecture 2.}
@@ -60,8 +62,36 @@
 
 \section{Homotopy}
 
-\subsection{Definition}
-\subsection{Examples}
+\defn{Homotopy}{
+  Two continuous maps $f, g: X \to Y$ are homotopic if there is a
+  map called homotopy $H: X \times [0,1] \to Y$ that \textit{continuously deforms} $f$ to $g$,
+  denoted $f \simeq g$ or $f \homotopic{H} g$.
+  In general:
+  \begin{align*}
+    X \times [0,1] &\xrightarrow{H} Y \\
+    H(x, 0) &= f(x) \\
+    H(x, 1) &= g(x) \\
+    H(x, t) &= tf(x) + (1-t)g(x)
+  \end{align*}
+}
+
+\begin{example}
+$1 \homotopic{x^t} x$ when viewed as $x^0$ and $x^1$.
+\begin{align*}
+  X \times [0,1] &\xrightarrow{H} Y \\
+  H(x, 0) &= x^0 \\
+  H(x, 1) &= x^1 \\
+  H(x, t) &= x^t
+\end{align*}
+Another possible homotopy between the same functions is $t\cdot{}x + (1-t)\cdot{}1$, which suggsts that there may be many more of them.
+
+\todo{Plots?}
+\end{example}
+
+\begin{example}
+  $\{\cdot\} \times [0,1] -> \mathbb{C}$ with $H(x,t) = e^{2\pi{}it}$
+\end{example}
+
 \subsection{Homotopy and equivalence}
 
 \begin{theorem}
@@ -82,9 +112,23 @@
 
 \subsection{Contractible Spaces}
 
-\subsubsection{Convex Sets}
+\defn{Contractibility}{
+  A space is contractible if it is homotopically equivalent to a point (a constant map).
+}
 
-\subsubsection{Star-convex Sets}
+\defn{Path-connectedness}{
+}
+
+
+\begin{theorem}
+  Any convex set is contractible.
+\end{theorem}
+
+\defn{Star-convex Set}{}
+
+\begin{theorem}
+  Any star-convex set is contractible.
+\end{theorem}
 
 \subsubsection{Trees}
 

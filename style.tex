@@ -36,11 +36,13 @@
 
 \theoremstyle{defstyle}
 \newcounter{axiom} \numberwithin{axiom}{section}
+\newcounter{examplec} \numberwithin{examplec}{section}
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{elemma}[theorem]{Lemma}%[section]
 \newtheorem{eclaim}[theorem]{Claim}
 \newtheorem{eaxiom}[axiom]{Axiom}
 \newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[examplec]{Example}
 
 \newcommand\claim[1]{
   \begin{eclaim}
