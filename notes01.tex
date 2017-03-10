@@ -1,4 +1,6 @@
 \documentclass[10pt]{article}
+\usepackage{tikz-cd}
+\tikzcdset{labels={font=\everymath\expandafter{\the\everymath\textstyle}}}
 \input{style}
 \input{macros}
 
@@ -23,9 +25,45 @@
 
 \tableofcontents
 
+\section{Set-theoretic Definitions}
+
+\defn{Binary relation}{
+  A binary relation R on a set $X$ is a set of ordered pairs of elements of $X$.
+}
+
+\defn{Equivalence relation}{\label{def:equivalence}
+  An equivalence relation $\sim$ is a binary relation that is reflexive, symmetric and transitive.
+}
+
+\let\OldSim\sim
+\renewcommand{\sim}{\hyperref[def:equivalence]{\OldSim}}
+
+\defn{Equivalence class of an element}{\label{def:eqclass}
+  Given a set $X$ and an equivalence relation $\sim$, an
+  equivalence class of $a \in X$, denoted $[a]$ is a set $\{ x \in S \mid x \sim a \}$
+}
+
+\newcommand{\eqclass}[1]{\hyperref[def:eqclass]{[#1]}}
+
+\defn{Quotient Set}{\label{def:quotient-set}
+  A quotient set $X/{\sim}$ (also said ``$X$ \textit{modulo} $\sim$'') is a set of all \hyperref[def:eqclass]{equivalence
+    classes} of $X$ with respect to $\sim$.
+  $$
+  X/{\sim} = \{ \eqclass{x} : x \in X \}
+  $$
+}
+
+\newcommand{\quot}[2]{\hyperref[def:quotient-set]{#1/{#2}}}
+
+\defn{Quotient Map}{\label{def:quotient-map}
+  A quotient map is a surjective mapping that sends a point in $X$ to its equivalence class, containing it:
+  $q: X \to \quot{X}{\sim}$
+}
+
+
 \section{Point-set Topology}
 
-\defn{Topological space}{
+\defn{Topological space}{\label{def:topology}
   A topological space is a pair $\langle X, \tau \rangle$, where $X$ is a set
   and $\tau$, a topology on X, is a collection of subsets ($\tau \subseteq \mathcal{P}(X)$)
   called open sets, such that:
@@ -38,6 +76,9 @@
   \end{itemize}
 }
 
+\newcommand{\topX}{\hyperref[def:topology]{X}}
+\renewcommand{\top}[2]{\hyperref[def:topology]{\pair{#1}{#2}}}
+
 \defn{Trivial Topology}{
   A topological space is called trivial, when the topology on $X$
   consists only of $\emptyset$ and $X$.
@@ -49,7 +90,10 @@
 
 \defn{Continuous map}{
   Let $\langle X, \tau \rangle$ and $\langle Y, \sigma \rangle$ be topological spaces.
-  A map $f: X \to Y$ is \textbf{continuous} if $\forall s \in \sigma, \inv{f}(s) \in \tau$.
+  A map $f: X \to Y$ is \textbf{continuous} if:
+  $$
+  \forall s \in \sigma, \inv{f}(s) \in \tau
+  $$
   In plain English, a map is continuous when a preimage of an open set in $Y$ is an open set in $X$.
 
   $C(X,Y)$ denotes a set of all continuous maps between $X$ and $Y$.
@@ -58,6 +102,60 @@
 \todo{Base of topology and methods of inducing topologies on sets were discussed during Lecture 2.}
 
 \todo{Bonus. Compare topology to a field of sets to a $\sigma$-algebra to a Borel $\sigma$-algebra. Discussed during Lecture 5.}
+
+\subsection{Topology Restrictions}
+
+\defn{$T_1$ space}{}
+\defn{Hausdorff space}{}
+
+\subsection{Quotient Topology}
+
+\todo{Gluing.}
+
+Let $\top{X}{\tau}$ be a topological space and $\sim$ be an equivalence relation on $X$.
+
+\defn{Quotient Topogical Space}{
+  By analogy of a set and given $q: \top{X}{\tau} \to \top{\quot{X}{\sim}}{\tau_{\quot{X}{\sim}}}$,
+  \begin{align*}
+    \quot{X}{\sim} & = \{ \eqclass{x} : x \in X \} \\
+    \tau_{\quot{X}{\sim}} & = \{ U \subseteq \quot{X}{\sim} \mid \inv{q}(U) \in \tau \}
+  \end{align*}
+
+  $\tau_{\quot{X}{\sim}}$ is constructed this way to ensure $q$ is continuous.
+}
+
+\begin{theorem}
+  Given $Z$ is a topological space, $g$ is a surjective map, $p$ is a quotient map and the following diagram,
+
+  % \[
+  %   \begin{tikzcd}[font=\large, row sep=huge, column sep=huge]
+  %     \topX \arrow[swap]{d}{p} \arrow{dr}{g \circ p} &
+  %     \\
+  %     \quot{X}{\sim} \arrow[swap]{r}{g} & Z
+  %   \end{tikzcd}
+  % \]
+
+  \[
+    \begin{tikzcd}[font=\large, row sep=huge, column sep=huge]
+      \topX \arrow{dr}{p} \arrow{rr}{f = g \circ p} && Z \\
+      & \quot{X}{\sim} \arrow{ur}{g}
+    \end{tikzcd}
+  \]
+
+  $g$ is continuous $\iff$ $f = g \circ p$ is continuous.
+\end{theorem}
+
+\begin{example}
+  Have $z \in \mathbb{C}$, $\mathbb{S}^1 = \{ \abs{z} = 1 \}$, $I = [0..1] \subset \vr{1}$.
+
+  \[
+    \begin{tikzcd}[font=\large, row sep=huge, column sep=huge]
+      I \arrow{dr}{p} \arrow{rr}{f(t\in I) = \e{2i\pi{}t}} && \mathbb{S}^1 \\
+      & {\quot{I}{\Delta} = \{0,1\}} \arrow{ur}{g}
+    \end{tikzcd}
+  \]
+\end{example}
+
 
 
 \section{Homotopy}
@@ -94,12 +192,8 @@ Another possible homotopy between the same functions is $t\cdot{}x + (1-t)\cdot{
 
 \subsection{Homotopy and Equivalence}
 
-\defn{Equivalence}{
-  A binary relation is called an equivalence relation if it's reflexive, symmetric and transitive.
-}
-
 \begin{theorem}
-  Homotopy equivalence between spaces is an equivalence relation.
+  Homotopy equivalence between spaces is an \nameref{def:equivalence}.
 \end{theorem}
 
 \begin{proof}
@@ -107,7 +201,7 @@ Another possible homotopy between the same functions is $t\cdot{}x + (1-t)\cdot{
 \end{proof}
 
 \begin{theorem}
-  A homotopy between continuous maps is an equivalence relation.
+  A homotopy between continuous maps is an \nameref{def:equivalence}.
 \end{theorem}
 
 \begin{proof}
@@ -140,14 +234,13 @@ Another possible homotopy between the same functions is $t\cdot{}x + (1-t)\cdot{
 
 \section{Quotient Spaces and Maps}
 
-\todo{See lectures 2 and 3.}
-
-\todo{Brouwer's Fixed Point Theorem was mentioned around here. Bring up the context?}.
-
+\todo{See lectures 2 and 3. Most of this stuff}
 
 \subsection{Quotients and Groups}
 
 \subsection{Cones of Topological Spaces}
+
+\todo{Brouwer's Fixed Point Theorem was mentioned around here. Bring up the context?}.
 
 \section{Retractions and Deformation Retractions}
 
@@ -164,7 +257,6 @@ Course page: \url{https://sites.google.com/site/kafedramatematikikau/products-se
 
 \bibliography{references}{}
 \bibliographystyle{apalike}
-
 
 
 \end{document}
