@@ -21,6 +21,8 @@
   continuous function to another. This documents is a work in progress done during a course audit.
   These notes are taken purposefully in English to strenghten intuition
   and simplify lookup of concepts in related literature.
+
+  Warning: this document may be edited live during audit so watch out for incorrect statements!
 \end{abstract}
 
 \tableofcontents
@@ -60,8 +62,12 @@
   $q: X \to \quot{X}{\sim}$
 }
 
+\defn{Quotient by Set Membership}{\todo{TODO}. $\quot{X}{A}$}
+
 
 \section{Point-set Topology}
+
+\newcommand{\interval}{\ensuremath{[0..1]}}
 
 \defn{Topological space}{\label{def:topology}
   A topological space is a pair $\langle X, \tau \rangle$, where $X$ is a set
@@ -75,6 +81,8 @@
   \item $\tau$ is closed under arbitrary unions. \todo{Maybe find cute notation for this.}
   \end{itemize}
 }
+
+\todo{Posets}.
 
 \newcommand{\topX}{\hyperref[def:topology]{X}}
 \renewcommand{\top}[2]{\hyperref[def:topology]{\pair{#1}{#2}}}
@@ -158,7 +166,7 @@ Let $\top{X}{\tau}$ be a topological space and $\sim$ be an equivalence relation
 
 
 
-\section{Homotopy}
+\section{Homotopies Between Continuous Maps}
 
 \defn{Homotopy}{
   Two continuous maps $f, g: X \to Y$ are homotopic if there is a
@@ -190,16 +198,6 @@ Another possible homotopy between the same functions is $t\cdot{}x + (1-t)\cdot{
   $\{\cdot\} \times [0,1] \to \mathbb{C}$ with $H(x,t) = e^{2\pi{}it}$
 \end{example}
 
-\subsection{Homotopy and Equivalence}
-
-\begin{theorem}
-  Homotopy equivalence between spaces is an \nameref{def:equivalence}.
-\end{theorem}
-
-\begin{proof}
-  \ldots
-\end{proof}
-
 \begin{theorem}
   A homotopy between continuous maps is an \nameref{def:equivalence}.
 \end{theorem}
@@ -212,7 +210,25 @@ Another possible homotopy between the same functions is $t\cdot{}x + (1-t)\cdot{
 
 \defn{Contractibility}{
   A space is contractible if it is homotopically equivalent to a point (a constant map).
+
+  Extra definitions:
+  \begin{itemize}
+  \item \todo{$X\times 0$ is a retraction of CX (cone over X)}
+  \item \todo{homotopic equivalence to a point}
+  \end{itemize}
+
 }
+
+\begin{example}
+  $\vr{n}$ is contractible to a point.
+  \begin{align*}
+  \vr{n} \times [0,1] &\xrightarrow{H} \vr{n} \\
+  H(x, 0) &= 0 \\
+  H(x, 1) &= x \\
+  H(x, t) &= tx
+  \end{align*}
+\end{example}
+
 
 \defn{Path-connectedness}{
 }
@@ -222,6 +238,7 @@ Another possible homotopy between the same functions is $t\cdot{}x + (1-t)\cdot{
   Any convex set is contractible.
 \end{theorem}
 
+
 \begin{elemma}
   Contractibility does not depend on a choice of a point.
 \end{elemma}
@@ -229,8 +246,22 @@ Another possible homotopy between the same functions is $t\cdot{}x + (1-t)\cdot{
 \defn{Star-convex Set}{}
 
 \begin{theorem}
-  Any star-convex set is contractible.
+  A star-convex set is contractible to a point.
+  \begin{align*}
+    A \subset \vr{n} &\text{\;is (star-)convex} \\
+    a \in A \\
+    A \times [0,1] &\xrightarrow{H} A \\
+    H(x, 0) &= 0 \\
+    H(x, 1) &= x \\
+    H(x, t) &= at + x(1-t)
+  \end{align*}
 \end{theorem}
+
+\begin{theorem}
+  Assuming we know how to build topologies on trees (as in graph theory trees), every finite tree is a contractible topological space.
+\end{theorem}
+
+
 
 \section{Quotient Spaces and Maps}
 
@@ -242,7 +273,21 @@ Another possible homotopy between the same functions is $t\cdot{}x + (1-t)\cdot{
 
 \todo{Brouwer's Fixed Point Theorem was mentioned around here. Bring up the context?}.
 
-\section{Retractions and Deformation Retractions}
+\section{Retractions, Deformations and Deformation Retractions}
+
+\defn{Retraction}{}
+
+\todo{Bring up the example with ${x \over \norm{x}} - discussed along with retractions$}
+
+\defn{Deformation}{
+  A continuous mapping is a deformation into a subspace $A \subset X$ when
+  \begin{itemize}
+  \item $H_0 = id_X$
+  \item $\forall t \in \interval, H_t(A) \subset A$
+  \end{itemize}
+}
+
+\defn{Deformation Retraction}{}
 
 \section{Classes of Homotopy Maps}
 
@@ -250,6 +295,79 @@ Another possible homotopy between the same functions is $t\cdot{}x + (1-t)\cdot{
 
 \subsection{Mappings of $\mathbb{S}^1$ to Itself}
 
+
+\section{Homotopy Types}
+
+Subtitle: Homotopy Equivalences Between Spaces. Note that omotopy types have nothing to do with HOTT.
+
+
+Let $\top{X}{\tau}$ $\top{Y}{\sigma}$
+
+- homeomorphisms and commutative diagrams
+- idea: homeomorphisms and topological spaces form a category (TODO illustration here), and a group (for all morphisms with one side fixed)
+
+
+$Homeo(X)$ group of all identity maps of X
+
+\texttt{g} is a retraction of $Y$ to $X$ on $g(x)$ , g is also left inverse of f
+
+$ g \circ f \homotopic{} id_x $
+
+\defn{Homotopic Equivalence}{
+
+  A mapping $f: X \to Y$ is a homotopic equivalence when $\exists g: Y \to X$ such that $ g \circ f \homotopic{} id_X $ and $ f \circ g \homotopic{} id_Y $
+}.
+
+
+\begin{theorem}
+  Homotopy equivalence between spaces is an \nameref{def:equivalence}. \attr{Discussed during lecture 7}.
+\end{theorem}
+
+\begin{proof}
+  \ldots
+\end{proof}
+
+\let\point\cdot
+
+\begin{example}
+  $f: X \to \point $ is a homotopic equivalence to a point $\iff$ X is contractible.
+
+  $H_0 = id \homotopic{} H_1 = f$
+
+\end{example}
+
+  % \[
+  %   \begin{tikzcd}[font=\large, row sep=huge, column sep=huge]
+  %      X \arrow{r}{$f$} Y \arrow{r}{$g$} X
+  %   \end{tikzcd}
+  % \]
+
+\claim{Holes matter! $\infty \homotopic{} \texttt{B} \homotopic{} \textit{o\_O}$}
+
+
+\begin{example}
+  Glueing of a disk to some space using quotienting.
+  \textit{expanding/reducing?}
+\end{example}
+
+\claim{Homotopy Theory cares only about spaces glued from a finite number of $\mathcal{S}^n$ spaces, see Shape Theory.}
+
+
+\defn{Simple Homotopy Type}{A homotopy type is simple if you use a finite number of expansions and reductions}
+
+
+%foreshadowing
+\claim{This is a cue to working with simplicial complexes.}
+
+\subsection*{\ldots Interlude \ldots}
+
+$f: X\to Y$, $f$ is a proper mapping, $\inv{f}(\text{compact})$ is a compact
+
+\todo{Define compact}
+
+Defining proper homotopy equivalences.
+
+$\vr{n} \to \point$ is an improper homotopy. Compactness is a bitch.
 
 \section{Resources}
 
