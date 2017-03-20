@@ -1,5 +1,6 @@
 \documentclass[10pt]{article}
 \usepackage{tikz-cd}
+%\usepackage{tocloft}
 \tikzcdset{labels={font=\everymath\expandafter{\the\everymath\textstyle}}}
 \input{style}
 \input{macros}
@@ -10,6 +11,9 @@
 \author{}
 \date{}
 
+
+%\newcommand{\listofdefinitionsname}{List of definitions}
+%\newlistof[section]{defns}{dfn}{\listofdefinitionsname}
 
 \begin{document}
 
@@ -26,6 +30,7 @@
 \end{abstract}
 
 \tableofcontents
+
 
 \section{Set-theoretic Definitions}
 
@@ -298,13 +303,14 @@ Another possible homotopy between the same functions is $t\cdot{}x + (1-t)\cdot{
 
 \section{Homotopy Types}
 
-Subtitle: Homotopy Equivalences Between Spaces. Note that omotopy types have nothing to do with HOTT.
+\attr{Lecture 7.}
 
+\textit{Let $\top{X}{\tau}$ $\top{Y}{\sigma}$.}
 
-Let $\top{X}{\tau}$ $\top{Y}{\sigma}$
+A Homotopy Type is a synonym to homotopy equivalences between spaces. It is {\bf \large not} the homotopy type as in Homotopy Type Theory.
 
-- homeomorphisms and commutative diagrams
-- idea: homeomorphisms and topological spaces form a category (TODO illustration here), and a group (for all morphisms with one side fixed)
+\claim{Homeomorphisms and topological spaces form a category.}
+\claim{Homeomorphisms and topological spaces form a group (for all morphisms with one side fixed).}
 
 
 $Homeo(X)$ group of all identity maps of X
@@ -314,13 +320,12 @@ $Homeo(X)$ group of all identity maps of X
 $ g \circ f \homotopic{} id_x $
 
 \defn{Homotopic Equivalence}{
-
   A mapping $f: X \to Y$ is a homotopic equivalence when $\exists g: Y \to X$ such that $ g \circ f \homotopic{} id_X $ and $ f \circ g \homotopic{} id_Y $
 }.
 
 
 \begin{theorem}
-  Homotopy equivalence between spaces is an \nameref{def:equivalence}. \attr{Discussed during lecture 7}.
+  Homotopy equivalence between spaces is an \nameref{def:equivalence}.
 \end{theorem}
 
 \begin{proof}
@@ -368,6 +373,8 @@ $f: X\to Y$, $f$ is a proper mapping, $\inv{f}(\text{compact})$ is a compact
 Defining proper homotopy equivalences.
 
 $\vr{n} \to \point$ is an improper homotopy. Compactness is a bitch.
+
+
 
 \section{Resources}
 
