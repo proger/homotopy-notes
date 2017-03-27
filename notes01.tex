@@ -32,6 +32,7 @@
 \tableofcontents
 
 
+
 \section{Set-theoretic Definitions}
 
 \defn{Binary relation}{
@@ -74,6 +75,11 @@
 
 \newcommand{\interval}{\ensuremath{[0..1]}}
 
+\defn{Unit interval}{A unit interval (or just an interval)  $I$ is a subset $\interval \subset \vr{}$ of a real line, which is a popular notation in further homotopy buildup.}
+
+\defn{A graph of a function}{$\Gamma(f)$ - a subset of $\vr{} \times \vr{}$}
+
+
 \defn{Topological space}{\label{def:topology}
   A topological space is a pair $\langle X, \tau \rangle$, where $X$ is a set
   and $\tau$, a topology on X, is a collection of subsets ($\tau \subseteq \mathcal{P}(X)$)
@@ -111,6 +117,23 @@
 
   $C(X,Y)$ denotes a set of all continuous maps between $X$ and $Y$.
 }
+
+\defn{Homeomorphism}{
+  A mapping $f: X \to Y$ is a homeomorphism if $\exists g: Y \to X$ s.t. $X \xrightarrow{f} Y \xrightarrow{g} X \xrightarrow{f} Y$,
+  when $g \circ f = id_x$ and $f \circ g = id_Y$. It is a continuous map that has a continuous inverse.
+}
+
+\begin{example}
+  \textit{How to see that a map $h: \interval \to \interval$ is a homeomorphism?}
+  \begin{itemize}
+  \item At least it needs to be monotonous.
+  \item Preserves boundaries.
+  \end{itemize}
+
+  $H((\interval, 0, 1), (\interval, 0, 1))_\text{increasing} \bigcup H((\interval, 0, 1), (\interval, 1, 0))_\text{decreasing}$
+
+
+\end{example}
 
 \todo{Base of topology and methods of inducing topologies on sets were discussed during Lecture 2.}
 
@@ -158,16 +181,17 @@ Let $\top{X}{\tau}$ be a topological space and $\sim$ be an equivalence relation
   $g$ is continuous $\iff$ $f = g \circ p$ is continuous.
 \end{theorem}
 
-\begin{example}
-  Have $z \in \mathbb{C}$, $\mathbb{S}^1 = \{ \abs{z} = 1 \}$, $I = [0..1] \subset \vr{1}$.
+% BAD
+% \begin{example}
+%   Have $z \in \mathbb{C}$, $\mathbb{S}^1 = \{ \abs{z} = 1 \}$, $I = [0..1] \subset \vr{1}$.
 
-  \[
-    \begin{tikzcd}[font=\large, row sep=huge, column sep=huge]
-      I \arrow{dr}{p} \arrow{rr}{f(t\in I) = \e{2i\pi{}t}} && \mathbb{S}^1 \\
-      & {\quot{I}{\Delta} = \{0,1\}} \arrow{ur}{g}
-    \end{tikzcd}
-  \]
-\end{example}
+%   \[
+%     \begin{tikzcd}[font=\large, row sep=huge, column sep=huge]
+%       I \arrow{dr}{p} \arrow{rr}{f(t\in I) = \e{2i\pi{}t}} && \mathbb{S}^1 \\
+%       & {\quot{I}{\Delta} = \{0,1\}} \arrow{ur}{g}
+%     \end{tikzcd}
+%   \]
+% \end{example}
 
 
 
@@ -236,6 +260,7 @@ Another possible homotopy between the same functions is $t\cdot{}x + (1-t)\cdot{
 
 
 \defn{Path-connectedness}{
+
 }
 
 
@@ -300,6 +325,8 @@ Another possible homotopy between the same functions is $t\cdot{}x + (1-t)\cdot{
 
 \subsection{Mappings of $\mathbb{S}^1$ to Itself}
 
+$$ \pi_1 \mathcal{S}^1 = [ (\mathcal{S}^1, \cdot), (\mathcal{S}^1, \cdot) ] $$
+
 
 \section{Homotopy Types}
 
@@ -360,7 +387,6 @@ $ g \circ f \homotopic{} id_x $
 
 \defn{Simple Homotopy Type}{A homotopy type is simple if you use a finite number of expansions and reductions}
 
-
 %foreshadowing
 \claim{This is a cue to working with simplicial complexes.}
 
@@ -374,6 +400,116 @@ Defining proper homotopy equivalences.
 
 $\vr{n} \to \point$ is an improper homotopy. Compactness is a bitch.
 
+
+
+\section{Homeomorphisms}
+
+A fact about a group of homeomorphisms of an interval: homotopy $h_t = tf + (1-t)g$ monotonicity $\iff H^+, H^-$ are convex subset in a vector space $C(I, I)$ of all continuous functions. \textit{Prove it}.
+
+\begin{example}
+  Given curves $\gamma$ and $\delta$ that each enclose some surface.
+  Is there a homeomorphism $h: \vr{2} \to \vr{2}$ s.t. $h(\gamma) = \delta$?
+
+  \[
+    \begin{tikzcd}[font=\large, row sep=huge, column sep=huge]
+      \vr{2}  \arrow{rr}{\exists h?} && \vr{2} \\
+      & \arrow{ul}{\gamma} I \arrow{ur}{\delta}
+    \end{tikzcd}
+  \]
+\end{example}
+
+\begin{example}
+  Given $f(x) = x^2$. Build a homeomorphism $h: \vr{2} \to \vr{2}$ s.t. $h(y = 0) = \Gamma(f)$.
+  $$h(x,y) \mapsto (x, x^2 + y)$$
+  $$\inv{h}(x,y) \mapsto (x, -x^2 + y)$$
+  $$\inv{h} \circ h = id_{\vr{2}}$$
+
+  Generalizing,
+  $$h(x,y) \mapsto (x, f(x) + y)$$
+  $$\inv{h}(x,y) \mapsto (x, -f(x) + y)$$
+  $$\inv{h} \circ h = id_{\vr{2}}$$
+
+\end{example}
+
+\begin{example}
+  Given a graph of a continuous function $f: [a,b] \to \vr{},\, f(a) = f(b) = 0,\, m = \min f(x),\, M = \max f(x),\, \epsilon > 0$ that lies within a known rectangle $K = [a,b] \times [m - \epsilon, M + \epsilon]$.
+
+  Prove, $\exists h: \vr{2} \to \vr{2}$ ($h$ is a homeomorphism), s.t.
+  \begin{itemize}
+  \item $h([a,b] \times 0) = \Gamma(f)$
+  \item $h(z) = z \; \forall z \in \vr{2} \setminus K$.
+  \end{itemize}
+
+  This is how we get to locally deform curves on a plane.
+\end{example}
+
+\defn{Isotopy}{
+  A homotopy $H: X \times \interval \to X$ s.t. $\forall t,\, H_t$ is a homeomorphism is an isotopy.
+}
+
+\lemma{Alexander's Theorem}{
+  Any homeomorphism of a unit interval (or a disk, or any convex set) which is fixed on its boundary $\quot{h}{\partial\mathcal{D}^2} = id_{\mathcal{D}^2}$ is isotopic to $id_I$ with an isotopy that is also fixed on is boundary.
+
+  E.g. there is a homeomorphism that maps a rendering of a letter A inside a disk to rendering of a letter R.
+}{\textsc{\href{https://en.wikipedia.org/wiki/Alexander's_trick}{Alexander's Trick}}.
+
+  $H: \mathcal{D}^2 \times [0,1] \to \mathcal{D}^2$ is an isotopy.
+
+}
+
+Important result: if you have two continuous deformations of a unit disk, you can have a third continuous deformations between them.
+It is possible to use differentiability.
+
+See also, Cerf's theorem, \url{https://en.wikipedia.org/wiki/Cerf_theory} and Smale's theorem (don't confuse with Poincare conjecture).
+
+\section{Glueing}
+
+We were building up Homotopy Theory definitions to work with CW complexes.
+
+\defn{CW complexes (cell complexes)}{
+  Spaces, created by glueing simple spaces together.
+}
+
+Quotienting is the workhorse of glueing. Use quotient topology to set up topologies after glueing two spaces.
+
+\begin{example}
+  Identifying all points from a boundary of a disk (set $X$) and a single point from set $Y$ as a single equivalence class.
+\end{example}
+
+
+Notation: $ X \bigcup_{f} A $
+
+Big idea: geometric objects have combinatorial structure, there is a lot of machinery that lets you ``dumb down'' to those structures to simplify working with objects equivalent up to a homotopy.
+
+Foreshadowing: \href{https://en.wikipedia.org/wiki/Whitehead_theorem}{Whitehead theorem}.
+
+\begin{example}
+Let's build a cube.
+Its vertices are 8 zero-dimensional disks: $\mathcal{D}^0$, edges are 1-dimensional disks, faces are 2-dimensional disks.
+
+(NB spaces like $K^1$ are enough to model graphs in topology)
+
+\begin{align*}
+  K^0 &= \bigsqcup \mathcal{D}_i^0\\
+  K^1 &= \left(\bigsqcup \mathcal{D}_i^1\right) \bigcup_{\phi_i} K^0\\
+  K^2 &= \left(\bigsqcup \mathcal{D}_i^2\right) \bigcup_{\psi_i} K^1
+\end{align*}
+
+$K^i$ is an i-th skeleton. \textit{Interiors} of disks are called {\bf cells}.
+
+\end{example}
+
+\claim{An integer line is a cell complex.}
+
+\defn{CW complex}{
+  \begin{itemize}
+  \item C is for closure-finite (closure of each cell is contained in a union of finitely many cells)
+  \item W is for weak topology (roughly, every $K^i$ has a quotient topology)
+  \end{itemize}
+}
+
+
+\section{$\pi_n(X, x)$}
 
 
 \section{Resources}
