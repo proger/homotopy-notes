@@ -1,9 +1,12 @@
 \documentclass[10pt]{article}
+% \usepackage{parskip}
 \usepackage{tikz-cd}
+\usepackage{amsmath}
 %\usepackage{tocloft}
 \tikzcdset{labels={font=\everymath\expandafter{\the\everymath\textstyle}}}
 \input{style}
 \input{macros}
+\input{macros-logic}
 
 \title{Introduction to Homotopy Theory \\
   \large (Notes based on lectures by Sergiy Maksymenko)
@@ -32,6 +35,9 @@
 \tableofcontents
 
 
+\newcommand{\integer}[0]{\mathbb{Z}}
+
+\newrobustcmd{\builder}[2]{\{ #1 \bigm| #2 \}}
 
 \section{Set-theoretic Definitions}
 
@@ -39,12 +45,12 @@
   A binary relation R on a set $X$ is a set of ordered pairs of elements of $X$.
 }
 
+\let\OldSim\sim
+\renewcommand{\sim}{\hyperref[def:equivalence]{\OldSim}}
+
 \defn{Equivalence relation}{\label{def:equivalence}
   An equivalence relation $\sim$ is a binary relation that is reflexive, symmetric and transitive.
 }
-
-\let\OldSim\sim
-\renewcommand{\sim}{\hyperref[def:equivalence]{\OldSim}}
 
 \defn{Equivalence class of an element}{\label{def:eqclass}
   Given a set $X$ and an equivalence relation $\sim$, an
@@ -53,22 +59,125 @@
 
 \newcommand{\eqclass}[1]{\hyperref[def:eqclass]{[#1]}}
 
+\newrobustcmd{\upto}[1]{\hyperref[def:quotient-set]{#1}}
+
 \defn{Quotient Set}{\label{def:quotient-set}
-  A quotient set $X/{\sim}$ (also said ``$X$ \textit{modulo} $\sim$'') is a set of all \hyperref[def:eqclass]{equivalence
+  A quotient set $X/{\sim}$ (also said ``$X$ \textit{modulo} $\sim$'' or ``$X$ up to $\sim$``) is a set of all \hyperref[def:eqclass]{equivalence
     classes} of $X$ with respect to $\sim$.
   $$
   X/{\sim} = \{ \eqclass{x} : x \in X \}
   $$
 }
 
-\newcommand{\quot}[2]{\hyperref[def:quotient-set]{#1/{#2}}}
+\newcommand{\quot}[2]{\hyperref[def:quotient-set]{#1\diagup{}{#2}}}
 
-\defn{Quotient Map}{\label{def:quotient-map}
-  A quotient map is a surjective mapping that sends a point in $X$ to its equivalence class, containing it:
-  $q: X \to \quot{X}{\sim}$
+\defn{Quotient Map, Projection}{\label{def:quotient-map}
+  A surjective mapping that sends a point in $X$ to its equivalence class, containing it.
+
+  $$\pi: X \to \quot{X}{\sim}$$
 }
 
-\defn{Quotient by Set Membership}{\todo{TODO}. $\quot{X}{A}$}
+\newcommand{\quotmemb}[2]{\hyperref[def:quotient-set]{#1\diagup{}{#2}}}
+
+\defn{Quotient by Subset Membership}{\label{def:quotmemb}
+  Given a set $X$ and subset $A \subset X$, $\quot{X}{A}$ is a notation that assumes an implicit equivalence relation:
+
+  \[
+    \forall \alpha \beta \in X,\; \alpha \sim \beta =
+    \begin{cases}
+      \top, \alpha \in A \conj \beta \in A \\
+      \bot, \text{otherwise}
+    \end{cases}
+  \]
+
+  For example:
+  \begin{align*}
+    X & = \{a, b, c, d, e\} \\
+    A & = \{a, e\} \subset X \\
+    \quot{X}{A} & = \{ b, c, d, \eqclass{a} \} \\
+    \eqclass{a} & = \{a, e\}
+  \end{align*}
+
+  One can say {\it identification of all points in $A$ with each other}.
+}
+
+\section{Group-theoretic Definitions}
+
+\defn{Presentation}{
+  $$ \langle S\mid R\rangle$$
+  Where $S$ is a generator and $R$ is a relation.
+}
+
+\defn{Commutator}{
+  That one for groups: \url{https://en.wikipedia.org/wiki/Commutator}
+}
+
+\defn{Kernel (group)}{
+  Analog of a null space of a linear map (turns out it's also often called a kernel in linear algebra)
+}
+
+\begin{example}
+  $$ \mathbb{Z}_5 = {0,1,2,3,4} (\mod 5) $$
+  %<
+  $$ \{e,a,a^2,a^3,a^4\} = \langle a \mid a^5 = e \rangle $$
+\end{example}
+
+\defn{Free Group}{
+  Syntax for groups! $F_2$ if the free group has two generators.
+}
+
+\begin{example}  $F_1 = \integer $ (free cyclic group)
+\end{example}
+
+\begin{theorem}
+  Let group G be generated $g_1 \ldots g_k$, so every $h\in G$ is a product of some of its generators.
+
+  $$ F_k \xrightarrow{\phi} G $$
+
+  $$ G \cong F_k \diagup \ker \phi $$
+\end{theorem}
+
+\section{Geometry Definitions}
+
+\newrobustcmd{\ndisk}[1]{\hyperref[def:ndisk]{\mathcal{D}^{#1}}}
+\newrobustcmd{\nrball}[2]{\hyperref[def:ndisk]{\mathcal{B}_{#1}^{#2}}}
+\newrobustcmd{\nsphere}[1]{\hyperref[def:nsphere]{\mathcal{S}^{#1}}}
+
+
+\defn{n-sphere, hypersphere}{\label{def:nsphere}
+  $\nsphere{n}$. Generalizes a unit circle ($\nsphere{1}$ --- a circle in $\vr{2}$) and a unit sphere ($\nsphere{2}$ --- a sphere in $\vr{3}$). Given $\|\cdot\|$ is a norm,
+
+  $$\nsphere{n} = \builder{x}{\|x \in \vr{n+1}\| = 1} $$
+
+  A unit 0-sphere is a pair of endpoints of an interval $[-1, 1]$ of the real line.
+}
+
+\defn{n-disk, n-ball}{\label{def:ndisk}\label{def:ball}
+  $\ndisk{n}$. A disk (a closed ball) is a region contained inside $\nsphere{n}$. $\ndisk{1}$ is a line segment (in $\vr{1}$).
+
+  $$\ndisk{n} = \builder{x}{\|x \in \vr{n}\| \leq 1} $$
+
+  A {\bf ball} usually refers to a disk minus its boundary, an {\bf open ball}, which can be defined using $<$ instead of $\leq$.
+
+  $$\nrball{r}{n} = \builder{x}{\|x \in \vr{n}\| < r} $$
+}
+
+\defn{sphere modulo disk}{\label{def:spheremod}
+  $$
+  \nsphere{n} = \quotmemb{\ndisk{n}}{\nsphere{n-1}} = \quotmemb{\ndisk{n}}{\partial\ndisk{n}}
+  $$
+
+  For example, identifying the ends (a boundary, which in this case is a zero-dimensional sphere) of a line segment ($\ndisk{1}$) as one point produces a circle ($\nsphere{1}$) --- an object embeddable in $\vr{2}$:
+
+  $$ \nsphere{1} = \quotmemb{\ndisk{1}}{\nsphere{0}} $$
+
+  For a 2-sphere:
+
+  \[
+    \nsphere{2} = \quotmemb{\ndisk{2}}{\nsphere{1}}
+  \]
+}
+
 
 
 \section{Point-set Topology}
@@ -143,6 +252,7 @@
 
 \defn{$T_1$ space}{}
 \defn{Hausdorff space}{}
+
 
 \subsection{Quotient Topology}
 
@@ -323,6 +433,12 @@ Another possible homotopy between the same functions is $t\cdot{}x + (1-t)\cdot{
 
 \todo{See lectures 4 and 5}.
 
+% {
+% %  \medskip
+%   \includegraphics[width=0.4\textwidth]{Z}
+% %  \medskip
+% }
+
 \subsection{Mappings of $\mathbb{S}^1$ to Itself}
 
 $$ \pi_1 \mathcal{S}^1 = [ (\mathcal{S}^1, \cdot), (\mathcal{S}^1, \cdot) ] $$
@@ -479,7 +595,7 @@ Quotienting is the workhorse of glueing. Use quotient topology to set up topolog
 
 Notation: $ X \bigcup_{f} A $
 
-Big idea: geometric objects have combinatorial structure, there is a lot of machinery that lets you ``dumb down'' to those structures to simplify working with objects equivalent up to a homotopy.
+Big idea: geometric objects have combinatorial structure, there is a lot of machinery that lets you ``dumb down'' to those structures to simplify working with objects equivalent \upto{up to} a homotopy.
 
 Foreshadowing: \href{https://en.wikipedia.org/wiki/Whitehead_theorem}{Whitehead theorem}.
 
@@ -508,8 +624,73 @@ $K^i$ is an i-th skeleton. \textit{Interiors} of disks are called {\bf cells}.
   \end{itemize}
 }
 
+\section{Homotopy Groups}
+April 3.
 
-\section{$\pi_n(X, x)$}
+Notation abuse: there's actually a difference between $\circ$ (map composition) and $\star$ (group operation, which is denoted as $\circ$ instead!)
+
+\defn{Fundamental group}{\label{def:fundamental-group}
+  $$ \pi_1(\topX, x_0) = [(\nsphere{1}, \cdot), (\topX, x_0)] = [(I, \partial I), (\topX, x_0)]$$ %
+
+  \todo{where [A, B] are homotopy classes.}
+
+  The group multiplication is defined as homotopy composition for {\bf spaces equivalent up to a homotopy}:
+  $$ (\alpha \circ \beta)(t) = \alpha(2t) t \in [0, {1\over 2}, \beta(2t - 1) t \in [{1\over 2}, 1]] $$
+
+  Neutral element suggestions: constant mapping doesn't work.
+
+  Let's use deformations up to a homotopy:
+  $$ [\alpha] \circ [\beta] = [\alpha \circ \beta] $$
+
+  $$[\alpha] = [\alpha^\prime] \implies \alpha \homotopic{} \alpha^\prime$$
+}
+
+\todo{Now prove it's actually a group}
+
+\begin{theorem}
+  $$
+  [\alpha] \circ [\epsilon] =  [\epsilon] \circ [\alpha]  = [\alpha]
+  $$
+\end{theorem}
+\begin{proof}
+  In other words, $\alpha \circ \epsilon \simeq \alpha$
+\end{proof}
+
+Big idea: we're handling an equivalence class by introducing an extra parameter for a class deformation, and defining operations as parametrized homotopies. Lesson: paying for definitions is hard.
+
+\ldots
+
+% (get-buffer-window "monkey")
+% (delete-window nil)
+%%
+
+
+\begin{theorem}
+  \todo{This has been discussed earlier}
+  $$ \pi_1 (\nsphere{1}) \cong \mathbb{Z} $$
+\end{theorem}
+
+
+\subsection{Computing the Fundamental Group}
+
+
+Two instruments: Cover (a special case of a fibration) and Van Kampen's Theorem
+
+
+\begin{theorem}
+  (Van Kampen)
+
+  For any finite group $G$, build a 2-dimensional CW-complex $X$, s.t. $\pi_1(X, x) = G$.
+  Gave birth to combinatorial group theory (see also: word problem).
+\end{theorem}
+
+\subsection{Homotopy Groups of Spheres}
+
+The i-th homotopy group $\pi_i(\nsphere{n})$ summarizes the different ways in which the i-dimensional sphere $\nsphere{i}$
+can be mapped continuously (in homotopical sense, i.e. maps up to a homotopy) into the n-dimensional sphere $\nsphere{n}$.
+
+
+
 
 
 \section{Resources}
