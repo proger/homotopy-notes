@@ -38,6 +38,14 @@
 \newcommand{\integer}[0]{\mathbb{Z}}
 
 \newrobustcmd{\builder}[2]{\{ #1 \bigm| #2 \}}
+\newrobustcmd{\angled}[1]{\langle #1 \rangle}
+
+% forward declarations
+
+\newcommand{\wedgesum}{\hyperref[def:wedgesum]{\vee}}
+\newcommand{\glue}{\hyperref[def:glueing]{\bigcup}}
+\newcommand{\cwcomplex}{\nameref{def:cw-complex}}
+
 
 \section{Set-theoretic Definitions}
 
@@ -126,6 +134,10 @@
   Syntax for groups! $F_2$ if the free group has two generators.
 }
 
+\defn{Free Group by Universal Property}{
+  See \url{https://en.wikipedia.org/wiki/Free_group\#Universal_property}.
+}
+
 \begin{example}  $F_1 = \integer $ (free cyclic group)
 \end{example}
 
@@ -135,13 +147,31 @@
   $$ F_k \xrightarrow{\phi} G $$
 
   $$ G \cong F_k \diagup \ker \phi $$
+
+  $\ker \phi$ is a list of things on the right.
 \end{theorem}
 
+\begin{example}
+  {Dihedral group $\mathcal{D}_5$ --- symmetries of the pentagon.}
+
+  $r$ {\it rotates} the pentagon, $s$ {\it flips} it along the vertical axis.
+
+  $\mathcal{D}_5 = \angled{r, s \mid r^5 = 1, s^2 = 1, rs = sr^{-1}} $
+
+  See also: \url{https://en.wikipedia.org/wiki/Dihedral_group#Other_definitions}
+\end{example}
+
+\defn{Free Product with Amalgamation}{\label{def:amalgamatedfp}
+}
+
 \section{Geometry Definitions}
+
+Most of these constructions are the same \upto{up to} homotopy.
 
 \newrobustcmd{\ndisk}[1]{\hyperref[def:ndisk]{\mathcal{D}^{#1}}}
 \newrobustcmd{\nrball}[2]{\hyperref[def:ndisk]{\mathcal{B}_{#1}^{#2}}}
 \newrobustcmd{\nsphere}[1]{\hyperref[def:nsphere]{\mathcal{S}^{#1}}}
+\newrobustcmd{\ntorus}[1]{\hyperref[def:ntorus]{\mathcal{T}^{#1}}}
 
 
 \defn{n-sphere, hypersphere}{\label{def:nsphere}
@@ -171,13 +201,25 @@
 
   $$ \nsphere{1} = \quotmemb{\ndisk{1}}{\nsphere{0}} $$
 
-  For a 2-sphere:
+  For a 2-sphere, imagine making a dumpling from a disk-shaped piece of dough. It's not exactly a sphere, but topologically we don't care.
 
   \[
     \nsphere{2} = \quotmemb{\ndisk{2}}{\nsphere{1}}
   \]
 }
 
+\defn{torus}{\label{def:ntorus}
+  $\ntorus{n}$.
+
+  A 2-torus is a product of two circles. You can also build it my glueing two opposite sides of a square. Remember that a square is homeomophic to a $\ndisk{2}$. Let $B$ be a thickened bouquet $\nsphere{1} \wedgesum \nsphere{1}$ (so $\nsphere{1} \wedgesum \nsphere{1}$ is a \nameref{def:deformation-retraction} of $B$).
+
+  $$\ntorus{2} = \nsphere{1} \times \nsphere{1} = \ndisk{2} \glue_{f:\; \partial\ndisk{2} \;\to\; \nsphere{1} \wedgesum \nsphere{1}} B $$
+}
+
+\defn{double torus}{\label{def:double-torus}
+  A donut with two holes. Also known as a \href{https://en.wikipedia.org/wiki/Genus_(mathematics)}{genus}-two surface.
+  Can be constructed by folding a hexagon.
+}
 
 
 \section{Point-set Topology}
@@ -290,6 +332,10 @@ Let $\top{X}{\tau}$ be a topological space and $\sim$ be an equivalence relation
 
   $g$ is continuous $\iff$ $f = g \circ p$ is continuous.
 \end{theorem}
+
+\defn{Bouqet of spaces, wedge sum}{\label{def:wedgesum}
+  Glue two spaces by one point. $A \vee B$.
+}
 
 % BAD
 % \begin{example}
@@ -427,7 +473,7 @@ Another possible homotopy between the same functions is $t\cdot{}x + (1-t)\cdot{
   \end{itemize}
 }
 
-\defn{Deformation Retraction}{}
+\defn{Deformation Retraction}{\label{def:deformation-retraction}}
 
 \section{Classes of Homotopy Maps}
 
@@ -490,7 +536,7 @@ $ g \circ f \homotopic{} id_x $
   %   \end{tikzcd}
   % \]
 
-\claim{Holes matter! $\infty \homotopic{} \texttt{B} \homotopic{} \textit{o\_O}$}
+\claim{Holes matter! $\infty \homotopic{} \texttt{B} \homotopic{} \textit{o\_O}$,look at this graphically, not symbolically.}
 
 
 \begin{example}
@@ -578,12 +624,12 @@ It is possible to use differentiability.
 
 See also, Cerf's theorem, \url{https://en.wikipedia.org/wiki/Cerf_theory} and Smale's theorem (don't confuse with Poincare conjecture).
 
-\section{Glueing}
+\section{Glueing and Complexes}
 
 We were building up Homotopy Theory definitions to work with CW complexes.
 
-\defn{CW complexes (cell complexes)}{
-  Spaces, created by glueing simple spaces together.
+\defn{CW complex}{\label{def:cw-complex}
+  Also called a {\bf cell complex}. A space, created by glueing simple spaces together.
 }
 
 Quotienting is the workhorse of glueing. Use quotient topology to set up topologies after glueing two spaces.
@@ -592,8 +638,10 @@ Quotienting is the workhorse of glueing. Use quotient topology to set up topolog
   Identifying all points from a boundary of a disk (set $X$) and a single point from set $Y$ as a single equivalence class.
 \end{example}
 
+\defn{Glueing}{\label{def:glueing}
 
-Notation: $ X \bigcup_{f} A $
+  Notation: $ X \glue_{f} A $
+}
 
 Big idea: geometric objects have combinatorial structure, there is a lot of machinery that lets you ``dumb down'' to those structures to simplify working with objects equivalent \upto{up to} a homotopy.
 
@@ -607,8 +655,8 @@ Its vertices are 8 zero-dimensional disks: $\mathcal{D}^0$, edges are 1-dimensio
 
 \begin{align*}
   K^0 &= \bigsqcup \mathcal{D}_i^0\\
-  K^1 &= \left(\bigsqcup \mathcal{D}_i^1\right) \bigcup_{\phi_i} K^0\\
-  K^2 &= \left(\bigsqcup \mathcal{D}_i^2\right) \bigcup_{\psi_i} K^1
+  K^1 &= \left(\bigsqcup \mathcal{D}_i^1\right) \glue_{\phi_i} K^0\\
+  K^2 &= \left(\bigsqcup \mathcal{D}_i^2\right) \glue_{\psi_i} K^1
 \end{align*}
 
 $K^i$ is an i-th skeleton. \textit{Interiors} of disks are called {\bf cells}.
@@ -625,11 +673,20 @@ $K^i$ is an i-th skeleton. \textit{Interiors} of disks are called {\bf cells}.
 }
 
 \section{Homotopy Groups}
-April 3.
+
+% April 3.
 
 Notation abuse: there's actually a difference between $\circ$ (map composition) and $\star$ (group operation, which is denoted as $\circ$ instead!)
 
+
+% TODO: generalize
+\let\oldpi\pi
+\renewcommand{\pi}{\hyperref[def:fundamental-group]{\oldpi}}
+
 \defn{Fundamental group}{\label{def:fundamental-group}
+
+  \url{https://en.wikipedia.org/wiki/Homotopy_group}
+
   $$ \pi_1(\topX, x_0) = [(\nsphere{1}, \cdot), (\topX, x_0)] = [(I, \partial I), (\topX, x_0)]$$ %
 
   \todo{where [A, B] are homotopy classes.}
@@ -671,23 +728,74 @@ Big idea: we're handling an equivalence class by introducing an extra parameter 
 \end{theorem}
 
 
-\subsection{Computing the Fundamental Group}
-
-
-Two instruments: Cover (a special case of a fibration) and Van Kampen's Theorem
-
-
-\begin{theorem}
-  (Van Kampen)
-
-  For any finite group $G$, build a 2-dimensional CW-complex $X$, s.t. $\pi_1(X, x) = G$.
-  Gave birth to combinatorial group theory (see also: word problem).
-\end{theorem}
-
 \subsection{Homotopy Groups of Spheres}
 
 The i-th homotopy group $\pi_i(\nsphere{n})$ summarizes the different ways in which the i-dimensional sphere $\nsphere{i}$
 can be mapped continuously (in homotopical sense, i.e. maps up to a homotopy) into the n-dimensional sphere $\nsphere{n}$.
+
+
+\subsection{Computing the Fundamental Group}
+
+% April 10.
+
+Problems: given a space, compute its group. Given a group, compute its space.
+
+%   For any finite group $G$, build a 2-dimensional CW-complex $X$, s.t. $\pi_1(X, x) = G$.
+% Gave birth to combinatorial group theory (see also: word problem).
+
+
+Two instruments: Cover (a special case of a fibration) and van Kampen's Theorem
+
+\begin{theorem}
+  {van Kampen}
+
+  \url{https://en.wikipedia.org/wiki/Seifert-van_Kampen_theorem} \todo{we were discussing the combinatorial definition}
+
+  Big idea: express the structure of the fundamental group through the fundamental groups of two open, path-connected subspaces $A$ and $B$ that cover $X$.
+
+  Let $X$ is a path connected space, and $A, B$ are its subspaces such that $X = A \bigcup B$ and $A \bigcap B$ are
+  path connected. ($\bigcup$ is generalizable by a product, $\times$)
+
+  \[
+    \pi_1 (A \times B) = \pi_1 A \times \pi_1 B
+  \]
+
+  where $\times$ is an amalgamated free product.
+
+\end{theorem}
+
+
+Categorically: the fundamental group is a terminal object in some category.
+
+
+\begin{example}
+  $$ \pi_1 (\nsphere{1} \wedgesum  \nsphere{1}) = \integer \times \integer = \mathcal{F}_2  $$
+\end{example}
+
+\begin{example}
+  A 2-disk is path connected.
+
+  $$ \pi_1 (\ndisk{2}) = 0 $$
+\end{example}
+
+\begin{example}
+  $$ \pi_1(\nsphere{2}) = 0 $$
+
+  $A$ and $B$ are both $\ndisk{2}$.
+\end{example}
+
+\subsubsection{Computing Fundamental Groups of Surfaces}
+
+\begin{example}
+  {\nameref{def:fundamental-group} of $\ntorus{2}$}
+
+  This is solvable if you look at the torus as a \cwcomplex --- note there are multiple ways to compute a complex for a torus. For example, try using a diagonal of a square.
+
+  $$ \pi_1{\ntorus{2}} = \angled{a,b \mid aba^{-1}b^{-1}} = \integer \oplus \integer $$
+\end{example}
+
+% In category theory, a branch of mathematics, a pullback (also called a fiber product, fibre product, fibered product or Cartesian square) is the limit of a diagram consisting of two morphisms f : X → Z and g : Y → Z with a common codomain. The pullback is often written
+
 
 
 
